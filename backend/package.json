@@ -7,7 +7,8 @@
   "scripts": {
     "start": "node server.js",
     "dev": "node --watch server.js",
-    "reset-db": "rimraf data/pokevault.db && node server.js --reset-only"
+    "reset-db": "rimraf data/pokevault.db && node server.js --reset-only",
+    "export-seed": "node export-seed.js"
   },
   "dependencies": {
     "better-sqlite3": "^11.3.0",

@@ -83,6 +83,41 @@ reemplaza el link que dice `https://placehold.co/...` por el link real de
 la imagen. Solo funciona si aún no has creado `backend/data/pokevault.db`
 (o si borras ese archivo para que se regenere desde cero).
 
+### ⚠️ Importante: que el profesor vea las mismas fotos que tú
+
+La Opción A es cómoda, pero solo cambia tu base de datos **local**
+(`backend/data/pokevault.db`), que está en `.gitignore` a propósito — no se
+sube a GitHub (es lo correcto: nunca se versiona una base de datos
+generada). Si solo usas la Opción A y haces `git push`, quien clone el repo
+(tu profesor incluido) va a ver las fotos **viejas** de `02_seed.sql`,
+porque su copia arma la base de datos desde ese archivo, no desde la tuya.
+
+Para que tus cambios sí queden en GitHub, después de editar fotos en el
+panel de administración corre esto **una vez, antes de hacer commit**:
+
+```bash
+cd poke-platform-tcg/backend
+npm run export-seed
+```
+
+Esto reescribe `database/02_seed.sql` con exactamente lo que tienes en tu
+base de datos local en ese momento (fotos, precios, stock, todo). Después
+solo falta subirlo:
+
+```bash
+cd ..
+git add database/02_seed.sql
+git commit -m "Actualiza fotos de productos"
+git push
+```
+
+Ahora cualquiera que clone el repo (o lo despliegue en Render/Railway) va a
+ver las mismas fotos que tú, porque su base de datos se crea desde el
+`02_seed.sql` actualizado. Puedes seguir usando el panel de administración
+para probar cambios libremente — solo acuérdate de correr
+`npm run export-seed` antes de cada `git push` si quieres que esos cambios
+se vean en GitHub.
+
 **¿Cómo consigo el "link directo" de una imagen?**
 En el navegador, clic derecho sobre la imagen → "Copiar dirección de
 imagen" (Chrome) o "Copiar enlace de la imagen" (Firefox). Si pegas ese
@@ -175,3 +210,13 @@ ver comentarios en `database/01_schema.sql`.
    (la pestaña de categoría) como el único obligatorio, y la expansión pasó
    a chip opcional para que el catálogo sea navegable sin tener que elegir
    un set primero — sigue contando como filtro dentro del mismo caso de uso.
+9. **Lista estándar de rarezas**: `rareza` es texto libre en la base de
+   datos (no tiene `CHECK`, a diferencia de `condicion`), pero tanto el
+   filtro del catálogo como el formulario del mantenedor de productos usan
+   siempre estos 6 valores: **Comunes, EX, Full Art, Alt Art, Hyper Rare,
+   Promo Card**. Los datos de ejemplo se actualizaron para usar solo estos
+   valores (antes tenían "Ultra Rare", que se reemplazó por la categoría
+   más específica que le correspondía a cada carta: EX, Full Art o Alt Art
+   según el tipo de ilustración). Se agregaron además dos cartas de ejemplo
+   nuevas — una común (Pidgey) y una promocional (Pikachu Promo) — porque
+   antes ninguna carta de muestra usaba esas dos categorías.

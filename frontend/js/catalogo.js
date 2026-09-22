@@ -43,7 +43,8 @@ function setupChips(containerId, key) {
 }
 
 function cardTemplate(p) {
-  const isRare = p.rareza === 'Ultra Rare' || p.rareza === 'Hyper Rare';
+  const RAREZAS_PREMIUM = ['EX', 'Full Art', 'Alt Art', 'Hyper Rare', 'Promo Card'];
+  const isRare = RAREZAS_PREMIUM.includes(p.rareza);
   const sinStock = p.cantidad_disponible <= 0;
   const metaBits = [];
   if (p.nombre_set) metaBits.push(p.nombre_set);

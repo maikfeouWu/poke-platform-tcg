@@ -56,7 +56,17 @@
       </div>
 
       <!-- Campos propios de SINGLE -->
-      <div class="field campos-single"><label>Rareza</label><input name="rareza" placeholder="Ej: Ultra Rare"></div>
+      <div class="field campos-single">
+        <label>Rareza</label>
+        <select name="rareza">
+          <option value="Comunes">Comunes</option>
+          <option value="EX">EX</option>
+          <option value="Full Art">Full Art</option>
+          <option value="Alt Art">Alt Art</option>
+          <option value="Hyper Rare">Hyper Rare</option>
+          <option value="Promo Card">Promo Card</option>
+        </select>
+      </div>
       <div class="field campos-single">
         <label>Condición</label>
         <select name="condicion">
@@ -141,7 +151,7 @@
       <button class="btn btn-ghost on-dark" id="refreshPedidos">Actualizar</button>
     </div>
     <table class="data-table">
-      <thead><tr><th>ID</th><th>Cliente</th><th>Fecha</th><th>Total</th><th>Estado</th><th>Actualizar</th></tr></thead>
+      <thead><tr><th>ID</th><th>Cliente</th><th>Fecha</th><th>Total</th><th>Estado</th><th>Actualizar</th><th></th></tr></thead>
       <tbody id="pedidosBody"></tbody>
     </table>
   </section>

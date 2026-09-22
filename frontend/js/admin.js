@@ -75,7 +75,17 @@ async function loadProductosAdmin() {
           await apiSend('DELETE', `/productos/${btn.dataset.del}`);
           loadProductosAdmin();
         } catch (err) {
-          alert(err.error || 'No se pudo eliminar.');
+          if (err.pedidos && err.pedidos.length) {
+            const lista = err.pedidos
+              .map((p) => `  · Pedido #${p.id_orden} — ${p.estado} — ${new Date(p.fecha).toLocaleDateString('es-CL')}`)
+              .join('\n');
+            alert(
+              `No se puede eliminar: este producto ya se vendió en ${err.pedidos.length} pedido(s):\n\n${lista}\n\n` +
+              `Ve a la pestaña "Pedidos" y elimina esos pedidos primero (si son de prueba), y luego podrás borrar el producto.`
+            );
+          } else {
+            alert(err.error || 'No se pudo eliminar.');
+          }
         }
       });
     });
@@ -187,11 +197,11 @@ document.getElementById('formUsuario').addEventListener('submit', async (e) => {
 // --- Pedidos ----------------------------------------------------------------
 async function loadPedidos() {
   const tbody = document.getElementById('pedidosBody');
-  tbody.innerHTML = '<tr><td colspan="6">Cargando…</td></tr>';
+  tbody.innerHTML = '<tr><td colspan="7">Cargando…</td></tr>';
   try {
     const pedidos = await apiGet('/ordenes');
     if (!pedidos.length) {
-      tbody.innerHTML = '<tr><td colspan="6">Aún no hay pedidos. Ve al catálogo, agrega productos al carrito y confirma la compra en "Carrito y checkout".</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="7">Aún no hay pedidos. Ve al catálogo, agrega productos al carrito y confirma la compra en "Carrito y checkout".</td></tr>';
       return;
     }
     tbody.innerHTML = pedidos.map((o) => `
@@ -206,6 +216,7 @@ async function loadPedidos() {
             ${['pendiente', 'pagado', 'enviado', 'cancelado'].map((s) => `<option value="${s}" ${s === o.estado ? 'selected' : ''}>${s}</option>`).join('')}
           </select>
         </td>
+        <td class="row-actions"><button data-del-orden="${o.id_orden}">Eliminar</button></td>
       </tr>`).join('');
 
     tbody.querySelectorAll('[data-estado]').forEach((sel) => {
@@ -218,8 +229,21 @@ async function loadPedidos() {
         }
       });
     });
+
+    tbody.querySelectorAll('[data-del-orden]').forEach((btn) => {
+      btn.addEventListener('click', async () => {
+        const id = btn.dataset.delOrden;
+        if (!confirm(`¿Eliminar el pedido #${id}? Esto también libera cualquier producto que estuviera bloqueado por esta venta.`)) return;
+        try {
+          await apiSend('DELETE', `/ordenes/${id}`);
+          loadPedidos();
+        } catch (err) {
+          alert(err.error || 'No se pudo eliminar el pedido.');
+        }
+      });
+    });
   } catch (err) {
-    tbody.innerHTML = '<tr><td colspan="6">Error cargando pedidos. Revisa que el backend esté corriendo.</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="7">Error cargando pedidos. Revisa que el backend esté corriendo.</td></tr>';
   }
 }
 

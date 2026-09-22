@@ -112,4 +112,14 @@ router.put('/:id/estado', (req, res) => {
   res.json({ ok: true });
 });
 
+// DELETE /api/ordenes/:id — elimina un pedido de prueba/erróneo.
+// ON DELETE CASCADE en DETALLE_ORDEN borra automáticamente sus líneas,
+// lo que a su vez libera cualquier producto que estuviera "atrapado" por
+// esa venta (ver ON DELETE RESTRICT en routes/productos.js).
+router.delete('/:id', (req, res) => {
+  const info = db.prepare('DELETE FROM ORDEN_COMPRA WHERE id_orden = ?').run(req.params.id);
+  if (info.changes === 0) return res.status(404).json({ error: 'Orden no encontrada.' });
+  res.json({ ok: true });
+});
+
 module.exports = router;

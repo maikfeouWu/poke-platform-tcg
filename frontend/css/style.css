@@ -31,7 +31,7 @@
 
 * { box-sizing: border-box; }
 
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; color-scheme: dark; }
 
 body {
   margin: 0;
@@ -226,6 +226,18 @@ button, input, select {
   border: 1px solid var(--line-cream);
   background: rgba(255, 255, 255, 0.06);
   color: var(--ink-on-cream);
+}
+
+/* Las opciones de un <select> las dibuja el navegador con su propio fondo
+   (normalmente blanco), así que hay que forzar fondo oscuro + texto claro
+   también en <option>, o quedan invisibles hasta pasarles el mouse. */
+select {
+  color-scheme: dark;
+}
+
+select option {
+  background: var(--surface-raised);
+  color: var(--ink-strong);
 }
 
 .chip-row {

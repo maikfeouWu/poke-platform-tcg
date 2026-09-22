@@ -239,8 +239,21 @@ router.delete('/:id', (req, res) => {
     if (info.changes === 0) return res.status(404).json({ error: 'Producto no encontrado.' });
     res.json({ ok: true });
   } catch (err) {
-    // ON DELETE RESTRICT: no se puede borrar un producto con ventas asociadas
-    res.status(409).json({ error: 'No es posible eliminar: el producto tiene ventas asociadas.' });
+    // ON DELETE RESTRICT: no se puede borrar un producto con ventas asociadas.
+    // Se buscan esos pedidos para decirle al usuario exactamente cuáles son,
+    // en vez de solo avisar que "tiene ventas" sin más detalle.
+    const pedidos = db.prepare(`
+      SELECT d.id_orden, o.estado, o.fecha
+      FROM DETALLE_ORDEN d
+      JOIN ORDEN_COMPRA o ON o.id_orden = d.id_orden
+      WHERE d.id_producto = ?
+      ORDER BY o.fecha DESC
+    `).all(req.params.id);
+
+    res.status(409).json({
+      error: 'No es posible eliminar: el producto tiene ventas asociadas.',
+      pedidos, // [{ id_orden, estado, fecha }, ...] — para mostrar cuáles son
+    });
   }
 });
 
