@@ -1,9 +1,3 @@
--- =====================================================================
--- Moka Tcg (proyecto Poke-Platform TCG) — 13 Consultas CRUD requeridas
--- 2 ALTER, 3 SELECT (2 con JOIN), 2 UPDATE, 3 INSERT, 2 DELETE, 1 DROP
--- Estas mismas consultas son las que invoca el backend (ver /backend).
--- =====================================================================
-
 -- ---------------------------------------------------------------------
 -- 1) ALTER — agrega columna de descuento por coleccionista a PRODUCTO
 -- ---------------------------------------------------------------------
@@ -15,21 +9,6 @@ ALTER TABLE PRODUCTO ADD COLUMN descuento_coleccionista DECIMAL(5,2) NOT NULL DE
 ALTER TABLE ORDEN_COMPRA ADD COLUMN metodo_envio VARCHAR(20) NOT NULL DEFAULT 'estandar';
 
 
--- ---------------------------------------------------------------------
--- 3) SELECT — Consulta de catálogo de singles con filtros obligatorios
---    (tipo_producto) + opcionales (id_expansion, rareza, idioma,
---    condicion, acabado, rango de precio). Usada en GET /api/productos.
---
---    Álgebra relacional:
---    π nombre, precio_actual, cantidad_disponible, condicion, rareza,
---      acabado, idioma, nombre_set (
---        σ tipo_producto='single' ∧ id_expansion=:exp ∧ rareza=:rareza (
---          PRODUCTO ⋈(id_producto) CARTA_SINGLE ⋈(id_expansion) EXPANSION
---        )
---      )
---    Nota: id_expansion es opcional en la app (filtro no obligatorio);
---    condicion admite además el valor 'DMG' (Damaged).
--- ---------------------------------------------------------------------
 SELECT
     p.id_producto,
     p.nombre,
@@ -53,15 +32,7 @@ WHERE p.tipo_producto = 'single'
 ORDER BY p.precio_actual ASC;
 
 -- ---------------------------------------------------------------------
--- 4) SELECT — Historial de compras de un usuario (JOIN triple:
---    USUARIO - ORDEN_COMPRA - DETALLE_ORDEN - PRODUCTO)
---
---    Álgebra relacional:
---    π nombre, fecha, estado, nombre_producto, cantidad, precio_historico (
---      σ id_usuario=:id (
---        USUARIO ⋈ ORDEN_COMPRA ⋈ DETALLE_ORDEN ⋈ PRODUCTO
---      )
---    )
+-- 4) SELECT — Historial de compras de un usuario 
 -- ---------------------------------------------------------------------
 SELECT
     u.nombre        AS cliente,
@@ -79,12 +50,7 @@ WHERE u.id_usuario = :id_usuario
 ORDER BY oc.fecha DESC;
 
 -- ---------------------------------------------------------------------
--- 5) SELECT — Stock crítico por tipo de producto (sin JOIN)
---
---    Álgebra relacional:
---    π nombre, tipo_producto, cantidad_disponible (
---        σ cantidad_disponible <= 3 (PRODUCTO)
---    )
+-- 5) SELECT — Stock crítico por tipo de producto 
 -- ---------------------------------------------------------------------
 SELECT nombre, tipo_producto, cantidad_disponible
 FROM PRODUCTO
@@ -94,7 +60,6 @@ ORDER BY cantidad_disponible ASC;
 
 -- ---------------------------------------------------------------------
 -- 6) UPDATE — descuenta stock definitivo tras confirmar el pago
---    (paso "DescontarStock()" del diagrama de secuencia de checkout)
 -- ---------------------------------------------------------------------
 UPDATE PRODUCTO
 SET cantidad_disponible = cantidad_disponible - :cantidad

@@ -1,11 +1,8 @@
 # Moka Tcg (proyecto Poke-Platform TCG)
 
-Aplicación web (Front + Back + Base de Datos) para la Etapa 1 del proyecto de
-**ICI 324 Bases de Datos y Programación Web**, construida a partir del
-documento de diseño *"Poke-Platform TCG — Documento de Diseño de Software"*
+*"Poke-Platform TCG — Documento de Diseño de Software"*
 (Etienne Araya Cisternas): un e-commerce especializado en Pokémon TCG (cartas
-sueltas, sellados y accesorios), con marca comercial **Moka Tcg** y tema
-visual "Dark Mode" en tonos violeta.
+sueltas, sellados y accesorios), con marca comercial **Moka Tcg**
 
 ## Qué cumple esta entrega (Etapa 1)
 
@@ -62,75 +59,6 @@ poke-platform-tcg/
     ├── css/style.css            # Paleta Dark Mode violeta
     └── js/{api,catalogo,checkout,admin,cuenta}.js
 ```
-## Cambiar las imágenes del catálogo
-
-Cada producto tiene una columna `imagen_url` que guarda un link (URL) a una
-foto en internet — la tarjeta la muestra automáticamente si el link es
-válido, y si no, vuelve a mostrar el rombo de relleno.
-
-**Opción A — desde el panel de administración (la más fácil, sin tocar código):**
-1. Corre el proyecto (`npm start`) y entra a `http://localhost:3000/admin.html`.
-2. En la pestaña "Mantener Productos", en la columna **URL de imagen** de
-   cada fila, pega el link directo a la foto (tiene que terminar en algo
-   como `.jpg`, `.png` o `.webp`) y presiona **Guardar**.
-3. Para productos nuevos, hay un campo "URL de la imagen (opcional)" en el
-   formulario de creación, arriba de la tabla.
-4. Vuelve al catálogo (`index.html`) y recarga la página — ya se ve la foto nueva.
-
-**Opción B — editando los datos de ejemplo (antes de correrlo por primera vez):**
-Abre `database/02_seed.sql`, busca la línea del producto que quieras y
-reemplaza el link que dice `https://placehold.co/...` por el link real de
-la imagen. Solo funciona si aún no has creado `backend/data/pokevault.db`
-(o si borras ese archivo para que se regenere desde cero).
-
-### ⚠️ Importante: que el profesor vea las mismas fotos que tú
-
-La Opción A es cómoda, pero solo cambia tu base de datos **local**
-(`backend/data/pokevault.db`), que está en `.gitignore` a propósito — no se
-sube a GitHub (es lo correcto: nunca se versiona una base de datos
-generada). Si solo usas la Opción A y haces `git push`, quien clone el repo
-(tu profesor incluido) va a ver las fotos **viejas** de `02_seed.sql`,
-porque su copia arma la base de datos desde ese archivo, no desde la tuya.
-
-Para que tus cambios sí queden en GitHub, después de editar fotos en el
-panel de administración corre esto **una vez, antes de hacer commit**:
-
-```bash
-cd poke-platform-tcg/backend
-npm run export-seed
-```
-
-Esto reescribe `database/02_seed.sql` con exactamente lo que tienes en tu
-base de datos local en ese momento (fotos, precios, stock, todo). Después
-solo falta subirlo:
-
-```bash
-cd ..
-git add database/02_seed.sql
-git commit -m "Actualiza fotos de productos"
-git push
-```
-
-Ahora cualquiera que clone el repo (o lo despliegue en Render/Railway) va a
-ver las mismas fotos que tú, porque su base de datos se crea desde el
-`02_seed.sql` actualizado. Puedes seguir usando el panel de administración
-para probar cambios libremente — solo acuérdate de correr
-`npm run export-seed` antes de cada `git push` si quieres que esos cambios
-se vean en GitHub.
-
-**¿Cómo consigo el "link directo" de una imagen?**
-En el navegador, clic derecho sobre la imagen → "Copiar dirección de
-imagen" (Chrome) o "Copiar enlace de la imagen" (Firefox). Si pegas ese
-link en una pestaña nueva y se abre *solo la foto* (sin el resto de la
-página web alrededor), es un link válido para usar acá.
-
-> Ten en cuenta: muchas páginas no permiten usar sus imágenes desde otro
-> sitio ("hotlinking") y la foto puede no cargar aunque el link se vea
-> bien. Si eso pasa, prueba con imágenes propias subidas a un servicio como
-> [imgur.com](https://imgur.com) (sube la foto ahí y copia el link directo
-> que te dan), o con bancos de imágenes libres de uso como
-> [Unsplash](https://unsplash.com) o [Pexels](https://pexels.com).
-
 ## Cuenta de usuario (alcance de este proyecto)
 
 `cuenta.html` permite **crear una cuenta** (nombre, email, dirección) y
@@ -143,29 +71,6 @@ necesitas login real, lo natural es agregar una columna `password_hash` a
 `USUARIO` y usar una librería como `bcrypt` + tokens de sesión (JWT) — el
 informe original ya contempla JWT para la Etapa 3.
 
-## Integración con Collectr (precios sugeridos)
-
-Collectr sí tiene una **API oficial** (`https://getcollectr.com/api`), pero
-requiere crear una cuenta, suscribirte y aceptar sus Términos de Servicio
-para obtener una API key — no es un endpoint público abierto, así que no
-pude conectarlo por ti sin esas credenciales.
-
-Lo que sí dejé listo:
-- La columna `precio_sugerido` en `PRODUCTO` (pensada exactamente para este
-  propósito) y su campo editable en el panel de administración, junto al
-  precio de venta — por ahora se completa **a mano** como referencia de
-  mercado.
-- El punto de integración queda marcado en `backend/routes/productos.js`
-  (sección de creación/edición de productos).
-
-**Para conectarlo de verdad** cuando tengas tu API key:
-1. Consíguela en `https://getcollectr.com/api`.
-2. Guárdala como variable de entorno en `backend/` (por ejemplo en un
-   archivo `.env`, que ya está en `.gitignore` para que no se suba a GitHub).
-3. En `backend/routes/productos.js`, en el bloque de creación de producto,
-   agrega una llamada a la API de Collectr (con `fetch`) buscando el
-   producto por nombre/set, y usa el precio que te devuelva para completar
-   `precio_sugerido` automáticamente en vez de escribirlo a mano.
 
 ## Diccionario de datos (extracto — DETALLE_ORDEN)
 
@@ -200,23 +105,3 @@ ver comentarios en `database/01_schema.sql`.
    aprobado) para poder demostrar la transacción de BD completa sin
    depender de credenciales reales de Webpay/MercadoPago; el punto de
    integración queda marcado en `backend/routes/ordenes.js`.
-6. **Condición `DMG` (Damaged)**: se agregó como cuarto valor válido de
-   `condicion` en `CARTA_SINGLE`, junto a NM/LP/MP.
-7. **Idioma en `PRODUCTO_SELLADO`**: se agregó porque los productos sellados
-   también se venden en distintas versiones de idioma (EN/ES/JP), igual que
-   los singles.
-8. **Filtro de expansión no obligatorio**: en el diseño original el caso de
-   uso "Consulta" pedía 2 filtros obligatorios; se dejó `tipo_producto`
-   (la pestaña de categoría) como el único obligatorio, y la expansión pasó
-   a chip opcional para que el catálogo sea navegable sin tener que elegir
-   un set primero — sigue contando como filtro dentro del mismo caso de uso.
-9. **Lista estándar de rarezas**: `rareza` es texto libre en la base de
-   datos (no tiene `CHECK`, a diferencia de `condicion`), pero tanto el
-   filtro del catálogo como el formulario del mantenedor de productos usan
-   siempre estos 6 valores: **Comunes, EX, Full Art, Alt Art, Hyper Rare,
-   Promo Card**. Los datos de ejemplo se actualizaron para usar solo estos
-   valores (antes tenían "Ultra Rare", que se reemplazó por la categoría
-   más específica que le correspondía a cada carta: EX, Full Art o Alt Art
-   según el tipo de ilustración). Se agregaron además dos cartas de ejemplo
-   nuevas — una común (Pidgey) y una promocional (Pikachu Promo) — porque
-   antes ninguna carta de muestra usaba esas dos categorías.

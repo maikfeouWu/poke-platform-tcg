@@ -1,10 +1,3 @@
-/* =====================================================================
-   Moka Tcg — Sistema de diseño (Dark Mode violeta)
-   Paleta pedida por el cliente: fondo casi negro, contenedores en
-   morado oscuro profundo, acentos en morado violeta vibrante y
-   bordes/hover en lavanda suave, con texto blanco puro.
-   ===================================================================== */
-
 @import url('https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap');
 
 :root {

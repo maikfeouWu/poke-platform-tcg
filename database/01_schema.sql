@@ -1,17 +1,3 @@
--- =====================================================================
--- Moka Tcg (proyecto Poke-Platform TCG) — Esquema Relacional (Etapa 1)
--- Basado en el Modelo Entidad-Relación y Modelo Relacional del informe
--- "Poke-Platform TCG - Documento de Diseño de Software"
--- =====================================================================
--- Notas de diseño (ver README, sección "Supuestos y decisiones de diseño"):
--- - Se agrega `idioma` a CARTA_SINGLE (RF1: filtrar singles por idioma).
--- - Se agrega `idioma` a PRODUCTO_SELLADO (los sellados también se venden
---   en distintas versiones de idioma).
--- - `condicion` admite el valor DMG (Damaged) además de NM/LP/MP.
--- - Se agregan `descripcion` y `precio_sugerido` a PRODUCTO (ficha de
---   especificaciones y referencia de precio de mercado / Collectr).
--- =====================================================================
-
 PRAGMA foreign_keys = ON;
 
 DROP TABLE IF EXISTS DETALLE_ORDEN;

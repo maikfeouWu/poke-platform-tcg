@@ -1,12 +1,3 @@
--- =====================================================================
--- Moka Tcg (proyecto Poke-Platform TCG) — Datos de ejemplo (Etapa 1)
--- Generado automáticamente por backend/export-seed.js a partir de la base
--- de datos local (backend/data/pokevault.db) el 2026-09-22T12:39:57.760Z.
--- Incluye cualquier foto, precio o stock que hayas cambiado desde el panel
--- de administración: este archivo es el que ve cualquiera que clone el
--- repo, así que súbelo a git para que esos cambios se vean en GitHub.
--- =====================================================================
-
 INSERT INTO USUARIO (nombre, email, direccion_envio, rol) VALUES
  ('Valentina Rojas Muñoz', 'valentina.rojas@mail.com', 'Av. Providencia 1650, depto. 402, Providencia', 'cliente'),
  ('Etienne Araya', 'etienne.admin@mokatcg.cl', 'Bodega Central, Viña del Mar', 'administrador');

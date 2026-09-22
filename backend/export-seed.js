@@ -1,27 +1,3 @@
-// export-seed.js — Sincroniza database/02_seed.sql con la base de datos
-// LOCAL actual (backend/data/pokevault.db).
-//
-// ¿Para qué sirve? backend/data/pokevault.db está en .gitignore a propósito
-// (es un archivo generado, no se sube a git). Eso significa que si cambias
-// fotos, precios o stock desde el panel de administración (admin.html),
-// esos cambios quedan SOLO en tu computador: cuando alguien más (el
-// profesor, un compañero) clona el repo, el backend crea una base de datos
-// nueva desde database/02_seed.sql — con los datos originales, no los tuyos.
-//
-// Este script lee tu base de datos actual y reescribe database/02_seed.sql
-// con exactamente lo que tienes ahora (incluidas las fotos que cambiaste),
-// para que quede guardado en git y cualquiera que clone el repo vea lo mismo
-// que tú.
-//
-// Uso (desde la carpeta backend/):
-//   npm run export-seed
-//
-// Luego, para que el profesor lo vea en GitHub:
-//   cd ..
-//   git add database/02_seed.sql
-//   git commit -m "Actualiza fotos e datos de ejemplo"
-//   git push
-
 const path = require('path');
 const fs = require('fs');
 const Database = require('better-sqlite3');
