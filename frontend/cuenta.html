@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Moka Tcg — Mi cuenta</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">
+      <span class="brand-mark">Moka<span>Tcg</span></span>
+      <span class="brand-tag">TCG marketplace</span>
+    </a>
+    <nav class="topnav">
+      <a href="index.html">Catálogo</a>
+      <a href="checkout.html">Carrito y checkout</a>
+      <a href="cuenta.html" class="active">Mi cuenta</a>
+      <a href="admin.html">Administración</a>
+    </nav>
+    <a class="cart-pill" href="checkout.html">
+      🧺 Carrito <span class="cart-count" data-cart-count>0</span>
+    </a>
+  </div>
+</header>
+
+<main class="shell" style="max-width: 720px;">
+
+  <div id="loggedOutView">
+    <div class="page-head">
+      <h1>Mi cuenta</h1>
+      <p class="eyebrow-line">Crea una cuenta para que el checkout te reconozca automáticamente, o inicia sesión si ya tienes una.</p>
+    </div>
+
+    <div class="checkout-layout" style="grid-template-columns: 1fr 1fr;">
+      <section class="panel">
+        <h3>Crear cuenta</h3>
+        <form id="formRegistro">
+          <div class="field" style="margin-bottom:12px;">
+            <label>Nombre completo</label>
+            <input name="nombre" required>
+          </div>
+          <div class="field" style="margin-bottom:12px;">
+            <label>Email</label>
+            <input name="email" type="email" required>
+          </div>
+          <div class="field" style="margin-bottom:12px;">
+            <label>Dirección de despacho (opcional)</label>
+            <input name="direccion_envio">
+          </div>
+          <button class="btn btn-primary btn-block" type="submit">Crear mi cuenta</button>
+        </form>
+        <p id="registroMsg" class="notice" style="display:none;"></p>
+      </section>
+
+      <section class="panel">
+        <h3>Iniciar sesión</h3>
+        <p class="eyebrow-line" style="font-size:0.85rem;">Proyecto académico: la sesión se identifica solo por email, sin contraseña.</p>
+        <form id="formLogin">
+          <div class="field" style="margin-bottom:12px;">
+            <label>Email registrado</label>
+            <input name="email" type="email" required>
+          </div>
+          <button class="btn btn-ghost on-dark btn-block" type="submit">Iniciar sesión</button>
+        </form>
+        <p id="loginMsg" class="notice" style="display:none;"></p>
+      </section>
+    </div>
+  </div>
+
+  <div id="loggedInView" style="display:none;">
+    <div class="page-head">
+      <h1>Hola de nuevo 👋</h1>
+    </div>
+    <section class="panel">
+      <h3 id="sessionNombre"></h3>
+      <p id="sessionEmail" style="color:var(--cream-dim);"></p>
+      <button class="btn btn-ghost on-dark" id="btnLogout">Cerrar sesión</button>
+    </section>
+  </div>
+
+</main>
+
+<script src="js/api.js"></script>
+<script src="js/cuenta.js"></script>
+</body>
+</html>

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Moka Tcg — Administración</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">
+      <span class="brand-mark">Moka<span>Tcg</span></span>
+      <span class="brand-tag">TCG marketplace</span>
+    </a>
+    <nav class="topnav">
+      <a href="index.html">Catálogo</a>
+      <a href="checkout.html">Carrito y checkout</a>
+      <a href="cuenta.html">Mi cuenta</a>
+      <a href="admin.html" class="active">Administración</a>
+    </nav>
+    <a class="cart-pill" href="checkout.html">
+      🧺 Carrito <span class="cart-count" data-cart-count>0</span>
+    </a>
+  </div>
+</header>
+
+<main class="shell">
+  <div class="page-head">
+    <h1>Panel de administración</h1>
+    <p class="eyebrow-line">Mantenedores de Productos y Usuarios, y gestión de estado de pedidos.</p>
+  </div>
+
+  <div class="admin-tabs" id="adminTabs">
+    <button class="tab-btn is-active" data-panel="productos">Mantener Productos</button>
+    <button class="tab-btn" data-panel="usuarios">Mantener Usuarios</button>
+    <button class="tab-btn" data-panel="pedidos">Pedidos</button>
+  </div>
+
+  <!-- MANTENEDOR PRODUCTOS -->
+  <section class="panel admin-panel" id="panel-productos">
+    <h3>Nuevo producto</h3>
+    <form class="form-inline" id="formProducto">
+      <div class="field"><label>Nombre</label><input name="nombre" required></div>
+      <div class="field"><label>Precio (CLP)</label><input name="precio_actual" type="number" required></div>
+      <div class="field"><label>Precio sugerido (Collectr)</label><input name="precio_sugerido" type="number" placeholder="Opcional"></div>
+      <div class="field"><label>Stock</label><input name="cantidad_disponible" type="number" value="0"></div>
+      <div class="field">
+        <label>Categoría</label>
+        <select name="tipo_producto" id="tipoProductoSelect">
+          <option value="single">Carta suelta (single)</option>
+          <option value="sellado">Sellado</option>
+          <option value="accesorio">Accesorio</option>
+        </select>
+      </div>
+
+      <!-- Campos propios de SINGLE -->
+      <div class="field campos-single"><label>Rareza</label><input name="rareza" placeholder="Ej: Ultra Rare"></div>
+      <div class="field campos-single">
+        <label>Condición</label>
+        <select name="condicion">
+          <option value="NM">Near Mint (NM)</option>
+          <option value="LP">Lightly Played (LP)</option>
+          <option value="MP">Moderately Played (MP)</option>
+          <option value="DMG">Damaged (DMG)</option>
+        </select>
+      </div>
+      <div class="field campos-single">
+        <label>Acabado</label>
+        <select name="acabado">
+          <option value="Foil">Foil</option>
+          <option value="Non-Foil">Non-Foil</option>
+          <option value="Reverse">Reverse Holo</option>
+        </select>
+      </div>
+      <div class="field campos-single">
+        <label>Idioma</label>
+        <select name="idioma">
+          <option value="EN">Inglés (EN)</option>
+          <option value="ES">Español (ES)</option>
+          <option value="JP">Japonés (JP)</option>
+        </select>
+      </div>
+      <div class="field campos-single">
+        <label>Expansión</label>
+        <select name="id_expansion" id="expansionSelectAdmin"></select>
+      </div>
+
+      <!-- Campos propios de SELLADO -->
+      <div class="field campos-sellado" style="display:none;"><label>Tipo de caja</label><input name="tipo_caja" placeholder="Booster Box, ETB, Bundle…"></div>
+      <div class="field campos-sellado" style="display:none;">
+        <label>Idioma</label>
+        <select name="idioma_sellado">
+          <option value="EN">Inglés (EN)</option>
+          <option value="ES">Español (ES)</option>
+          <option value="JP">Japonés (JP)</option>
+        </select>
+      </div>
+
+      <!-- Campos propios de ACCESORIO -->
+      <div class="field campos-accesorio" style="display:none;"><label>Tipo</label><input name="tipo_accesorio" placeholder="Sleeve, toploader, carpeta…"></div>
+      <div class="field campos-accesorio" style="display:none;"><label>Marca</label><input name="marca" placeholder="Opcional"></div>
+
+      <div class="field" style="grid-column: 1 / -1;"><label>URL de la imagen (opcional)</label><input name="imagen_url" placeholder="https://ejemplo.com/carta.jpg"></div>
+      <div class="field" style="grid-column: 1 / -1;"><label>Descripción / especificaciones</label><textarea name="descripcion" rows="2" placeholder="Detalles que verá el cliente al abrir la ficha del producto…" style="background:var(--surface); border:1px solid var(--line); color:var(--ink-strong); border-radius:7px; padding:10px 12px; font-family:var(--font-body);"></textarea></div>
+      <button class="btn btn-primary" type="submit">Crear producto</button>
+    </form>
+
+    <p class="filter-hint" style="color:var(--cream-dim); font-size:0.8rem; margin-bottom:10px;">Edita cualquier campo de un producto ya existente directamente en la tabla y presiona "Guardar" en su fila.</p>
+    <table class="data-table">
+      <thead><tr><th>ID</th><th>Nombre</th><th>Categoría</th><th>Precio</th><th>Sugerido</th><th>Stock</th><th>URL de imagen</th><th>Descripción</th><th></th></tr></thead>
+      <tbody id="productosBody"></tbody>
+    </table>
+  </section>
+
+  <!-- MANTENEDOR USUARIOS -->
+  <section class="panel admin-panel" id="panel-usuarios" style="display:none;">
+    <h3>Nuevo usuario</h3>
+    <form class="form-inline" id="formUsuario">
+      <div class="field"><label>Nombre</label><input name="nombre" required></div>
+      <div class="field"><label>Email</label><input name="email" type="email" required></div>
+      <div class="field"><label>Dirección</label><input name="direccion_envio"></div>
+      <div class="field">
+        <label>Rol</label>
+        <select name="rol"><option value="cliente">Cliente</option><option value="administrador">Administrador</option></select>
+      </div>
+      <button class="btn btn-primary" type="submit">Crear usuario</button>
+    </form>
+
+    <table class="data-table">
+      <thead><tr><th>ID</th><th>Nombre</th><th>Email</th><th>Rol</th><th></th></tr></thead>
+      <tbody id="usuariosBody"></tbody>
+    </table>
+  </section>
+
+  <!-- PEDIDOS -->
+  <section class="panel admin-panel" id="panel-pedidos" style="display:none;">
+    <div style="display:flex; justify-content:space-between; align-items:center;">
+      <h3>Pedidos recientes</h3>
+      <button class="btn btn-ghost on-dark" id="refreshPedidos">Actualizar</button>
+    </div>
+    <table class="data-table">
+      <thead><tr><th>ID</th><th>Cliente</th><th>Fecha</th><th>Total</th><th>Estado</th><th>Actualizar</th></tr></thead>
+      <tbody id="pedidosBody"></tbody>
+    </table>
+  </section>
+</main>
+
+<script src="js/api.js"></script>
+<script src="js/admin.js"></script>
+</body>
+</html>

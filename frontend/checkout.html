@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Moka Tcg — Carrito y checkout</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">
+      <span class="brand-mark">Moka<span>Tcg</span></span>
+      <span class="brand-tag">TCG marketplace</span>
+    </a>
+    <nav class="topnav">
+      <a href="index.html">Catálogo</a>
+      <a href="checkout.html" class="active">Carrito y checkout</a>
+      <a href="cuenta.html">Mi cuenta</a>
+      <a href="admin.html">Administración</a>
+    </nav>
+    <a class="cart-pill" href="checkout.html">
+      🧺 Carrito <span class="cart-count" data-cart-count>0</span>
+    </a>
+  </div>
+</header>
+
+<main class="shell">
+  <div class="page-head">
+    <h1>¿Dónde despachamos tu pedido?</h1>
+    <p class="eyebrow-line">Paso único · singles, sellados y accesorios se consolidan en un mismo envío.</p>
+  </div>
+
+  <div id="resultBanner"></div>
+
+  <div class="checkout-layout">
+    <section class="panel" id="formPanel">
+      <h3>Datos de despacho</h3>
+      <div class="field-row">
+        <div class="field">
+          <label for="clienteSelect">Cliente</label>
+          <select id="clienteSelect"></select>
+        </div>
+        <div class="field">
+          <label for="telefono">Teléfono</label>
+          <input id="telefono" placeholder="+56 9 0000 0000">
+        </div>
+      </div>
+      <div class="field">
+        <label for="direccion">Dirección</label>
+        <input id="direccion" placeholder="Calle, número, depto.">
+      </div>
+
+      <h3 style="margin-top:22px;">Método de envío</h3>
+      <div class="ship-options" id="shipOptions">
+        <div class="ship-option is-selected" data-metodo="estandar">
+          <strong>Envío protegido estándar</strong>
+          <span>Toploader + sobre acolchado · 3–5 días</span>
+        </div>
+        <div class="ship-option" data-metodo="retiro">
+          <strong>Retiro en tienda</strong>
+          <span>Sin costo</span>
+        </div>
+      </div>
+
+      <button class="btn btn-primary btn-block" id="confirmarCompra">Confirmar y pagar</button>
+      <p class="notice">Este checkout simula la pasarela de pago (Webpay) descrita en el diagrama de secuencia: valida stock, autoriza el pago, descuenta inventario y confirma la orden en una sola transacción de base de datos.</p>
+    </section>
+
+    <aside class="panel">
+      <h3>Resumen del pedido</h3>
+      <div id="cartItems"></div>
+      <div class="totals-row"><span>Subtotal</span><span id="subtotalValue">$0</span></div>
+      <div class="totals-row"><span>Envío</span><span id="shippingValue">A calcular</span></div>
+      <div class="totals-row grand"><span>Total</span><span id="totalValue">$0</span></div>
+    </aside>
+  </div>
+</main>
+
+<script src="js/api.js"></script>
+<script src="js/checkout.js"></script>
+</body>
+</html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Moka Tcg — Catálogo TCG</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">
+      <span class="brand-mark">Moka<span>Tcg</span></span>
+      <span class="brand-tag">TCG marketplace</span>
+    </a>
+    <nav class="topnav">
+      <a href="index.html" class="active">Catálogo</a>
+      <a href="checkout.html">Carrito y checkout</a>
+      <a href="cuenta.html">Mi cuenta</a>
+      <a href="admin.html">Administración</a>
+    </nav>
+    <a class="cart-pill" href="checkout.html">
+      🧺 Carrito <span class="cart-count" data-cart-count>0</span>
+    </a>
+  </div>
+</header>
+
+<main class="shell">
+  <div class="page-head">
+    <h1>Catálogo especializado</h1>
+    <p class="eyebrow-line">Singles, sellados y accesorios verificados por condición, rareza y expansión — sin sobreprecio de reventa.</p>
+  </div>
+
+  <div class="category-tabs" id="categoryTabs">
+    <button class="tab-btn is-active" data-tipo="single">Cartas sueltas</button>
+    <button class="tab-btn" data-tipo="sellado">Sellados</button>
+    <button class="tab-btn" data-tipo="accesorio">Accesorios</button>
+  </div>
+
+  <div class="catalog-layout">
+    <aside class="filter-rail" id="filterRail">
+      <h3>Filtrar singles</h3>
+      <p class="filter-hint">Todos los filtros son opcionales — combina los que quieras.</p>
+
+      <div class="filter-group" id="groupExpansion">
+        <label class="group-label">Expansión</label>
+        <div class="chip-row" id="chipsExpansion">
+          <button class="chip is-active" data-value="">Todas</button>
+        </div>
+      </div>
+
+      <div class="filter-group" id="groupRareza">
+        <label class="group-label">Rareza</label>
+        <div class="chip-row" id="chipsRareza">
+          <button class="chip" data-value="">Todas</button>
+          <button class="chip" data-value="Ultra Rare">Ultra Rare</button>
+          <button class="chip" data-value="Hyper Rare">Hyper Rare</button>
+        </div>
+      </div>
+
+      <div class="filter-group" id="groupIdioma">
+        <label class="group-label">Idioma</label>
+        <div class="chip-row" id="chipsIdioma">
+          <button class="chip" data-value="">Todos</button>
+          <button class="chip" data-value="EN">EN</button>
+          <button class="chip" data-value="ES">ES</button>
+          <button class="chip" data-value="JP">JP</button>
+        </div>
+      </div>
+
+      <div class="filter-group" id="groupCondicion">
+        <label class="group-label">Condición</label>
+        <select id="filterCondicion">
+          <option value="">Cualquiera</option>
+          <option value="NM">Near Mint (NM)</option>
+          <option value="LP">Lightly Played (LP)</option>
+          <option value="MP">Moderately Played (MP)</option>
+          <option value="DMG">Damaged (DMG)</option>
+        </select>
+      </div>
+
+      <div class="filter-group" id="groupAcabado">
+        <label class="group-label">Acabado</label>
+        <select id="filterAcabado">
+          <option value="">Cualquiera</option>
+          <option value="Foil">Foil</option>
+          <option value="Non-Foil">Non-Foil</option>
+          <option value="Reverse">Reverse Holo</option>
+        </select>
+      </div>
+
+      <div class="filter-group" id="groupPrecio">
+        <label class="group-label">Rango de precio</label>
+        <div class="price-range-row">
+          <input type="number" id="filterPrecioMin" placeholder="Mín">
+          <input type="number" id="filterPrecioMax" placeholder="Máx">
+        </div>
+      </div>
+
+      <button class="btn btn-primary btn-block" id="applyFilters">Aplicar filtros</button>
+    </aside>
+
+    <section>
+      <div class="results-meta">
+        <span id="resultsCount">Cargando catálogo…</span>
+      </div>
+      <div class="card-grid" id="cardGrid"></div>
+    </section>
+  </div>
+</main>
+
+<!-- Modal de especificaciones del producto -->
+<div id="productModal" class="modal-overlay" style="display:none;">
+  <div class="modal-box">
+    <button class="modal-close" id="modalClose">✕</button>
+    <div id="modalContent"></div>
+  </div>
+</div>
+
+<script src="js/api.js"></script>
+<script src="js/catalogo.js"></script>
+</body>
+</html>
