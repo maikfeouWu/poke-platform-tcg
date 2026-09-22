@@ -37,8 +37,6 @@ visual "Dark Mode" en tonos violeta.
       `cuenta.html` (sin contraseña — ver nota de alcance más abajo).
 - [x] **Ficha de producto**: al hacer clic en cualquier carta se abre un
       modal con todas sus especificaciones y su descripción.
-- [x] **Miniaturas en el resumen del pedido** (`checkout.html`).
-- [x] **Paleta "Dark Mode" violeta** aplicada en todo `frontend/css/style.css`.
 
 ## Estructura del repositorio
 
