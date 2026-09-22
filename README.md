@@ -64,43 +64,6 @@ poke-platform-tcg/
     ├── css/style.css            # Paleta Dark Mode violeta
     └── js/{api,catalogo,checkout,admin,cuenta}.js
 ```
-
-## Cómo correrlo localmente
-
-Requiere Node.js 18+.
-
-```bash
-git clone https://github.com/<tu-usuario>/poke-platform-tcg.git
-cd poke-platform-tcg/backend
-npm install
-npm start
-```
-
-Abre `http://localhost:3000`. Al primer arranque se crea automáticamente
-`backend/data/pokevault.db` con el esquema y los datos de ejemplo — no se
-necesita instalar ni configurar un motor de base de datos aparte.
-
-## Subir el proyecto a GitHub
-
-```bash
-cd poke-platform-tcg
-git init
-git add .
-git commit -m "Etapa 1: catálogo, checkout transaccional, mantenedores y BD relacional"
-git branch -M main
-git remote add origin https://github.com/<tu-usuario>/poke-platform-tcg.git
-git push -u origin main
-```
-
-> **Nota sobre GitHub Pages**: GitHub Pages solo sirve archivos estáticos y
-> no puede ejecutar el backend de Node/Express ni la base de datos. Para que
-> el enlace de "servicio de backend" que pide la pauta esté disponible en
-> línea, despliega la carpeta `backend/` (que también sirve el `frontend/`)
-> en un servicio gratuito como **Render**, **Railway** o **Fly.io**, y entrega
-> ese enlace junto con el repositorio de GitHub. Si solo necesitas mostrar la
-> interfaz sin backend real, puedes publicar `frontend/` en GitHub Pages,
-> pero el catálogo y el checkout no tendrán datos sin la API corriendo.
-
 ## Cambiar las imágenes del catálogo
 
 Cada producto tiene una columna `imagen_url` que guarda un link (URL) a una
