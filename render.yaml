@@ -1,0 +1,24 @@
+# render.yaml — Blueprint de despliegue para Render (https://render.com)
+#
+# Cómo usarlo:
+#   1. Sube este repo a GitHub (debe incluir este archivo en la raíz).
+#   2. En Render: New + > Blueprint > conecta el repo > Apply.
+#   3. Render detecta este archivo y crea el servicio automáticamente.
+#
+# El mismo servicio Express sirve la API (/api/...) y el frontend estático
+# (index.html, checkout.html, cuenta.html, admin.html), así que con un solo
+# servicio queda desplegada la aplicación completa.
+
+services:
+  - type: web
+    name: moka-tcg-backend
+    runtime: node
+    plan: free
+    region: oregon
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_VERSION
+        value: 20.11.0
