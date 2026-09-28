@@ -4,37 +4,6 @@
 (Etienne Araya Cisternas): un e-commerce especializado en Pokémon TCG (cartas
 sueltas, sellados y accesorios), con marca comercial **Moka Tcg**
 
-## Qué cumple esta entrega (Etapa 1)
-
-- [x] **Estructura de carpetas** (`backend/`, `frontend/`, `database/`).
-- [x] **Conexión a BD creada y funcional**: SQLite embebida, se crea sola al
-      primer arranque desde `database/01_schema.sql` + `02_seed.sql`.
-- [x] **Invocación y ejecución de consultas a través de la app**: cada
-      endpoint de `backend/routes/*.js` ejecuta las consultas reales sobre la
-      base de datos (no hay datos hardcodeados en el frontend).
-- [x] **Modelo relacional + diccionario de datos**: `database/01_schema.sql`
-      y sección "Diccionario de datos" más abajo.
-- [x] **13 consultas CRUD (2 ALTER, 3 SELECT con 2 JOIN, 2 UPDATE, 3 INSERT,
-      2 DELETE, 1 DROP)**, con álgebra relacional para los SELECT:
-      `database/03_consultas_crud.sql`.
-- [x] **Caso de Uso "Consulta"**: catálogo de singles con filtro obligatorio
-      de categoría y filtros opcionales de expansión, rareza, idioma,
-      condición (incluye **Damaged/DMG**), acabado y rango de precio —
-      `GET /api/productos`.
-- [x] **Caso de Uso transaccional (3 entidades)**: checkout relaciona
-      `USUARIO` – `PRODUCTO` – `ORDEN_COMPRA/DETALLE_ORDEN` en una única
-      transacción SQL (`POST /api/ordenes`), siguiendo el diagrama de
-      secuencia del informe (ValidarStock → AutorizarPago → DescontarStock →
-      OrdenConfirmada).
-- [x] **2 Mantenedores** (consultar/crear/modificar/eliminar): Productos
-      (`/api/productos`, con campos propios por categoría, stock, precio
-      sugerido y descripción editables) y Usuarios (`/api/usuarios`),
-      disponibles en el panel `admin.html`.
-- [x] **Cuenta de usuario**: alta y "inicio de sesión" simple por email en
-      `cuenta.html` (sin contraseña — ver nota de alcance más abajo).
-- [x] **Ficha de producto**: al hacer clic en cualquier carta se abre un
-      modal con todas sus especificaciones y su descripción.
-
 ## Estructura del repositorio
 
 ```
