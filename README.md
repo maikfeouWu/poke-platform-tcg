@@ -6,14 +6,17 @@ sueltas, sellados y accesorios), con marca comercial **Moka Tcg**
 
 
 ## Cómo correrlo localmente
-
+```bash
 Requiere Node.js 22.23.2
 #Teniendo la versión correcta de node.js, instalamos las dependencias
 y luego nos permitiría ver la pagina.
 cd poke-platform-tcg/backend
 npm install
 npm start
-
+```
+Abre `http://localhost:3000`. Al primer arranque se crea automáticamente
+`backend/data/pokevault.db` con el esquema y los datos de ejemplo — no se
+necesita instalar ni configurar un motor de base de datos aparte.
 ## Estructura del repositorio
 
 ```
