@@ -4,6 +4,16 @@
 (Etienne Araya Cisternas): un e-commerce especializado en Pokémon TCG (cartas
 sueltas, sellados y accesorios), con marca comercial **Moka Tcg**
 
+
+## Cómo correrlo localmente
+
+Requiere Node.js 22.23.2
+#Teniendo la versión correcta de node.js, instalamos las dependencias
+y luego nos permitiría ver la pagina.
+cd poke-platform-tcg/backend
+npm install
+npm start
+
 ## Estructura del repositorio
 
 ```
