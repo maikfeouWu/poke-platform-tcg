@@ -49,10 +49,7 @@ poke-platform-tcg/
 el navegador (`localStorage`) y el checkout la usa automáticamente para
 pre-seleccionar al cliente. **No hay contraseña ni cifrado**: es
 intencionalmente simple porque el foco de la Etapa 1 es el modelo de datos
-y las transacciones SQL, no un sistema de autenticación. Si más adelante
-necesitas login real, lo natural es agregar una columna `password_hash` a
-`USUARIO` y usar una librería como `bcrypt` + tokens de sesión (JWT) — el
-informe original ya contempla JWT para la Etapa 3.
+y las transacciones SQL, no un sistema de autenticación.
 
 
 ## Diccionario de datos (extracto — DETALLE_ORDEN)
